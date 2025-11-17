@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ion Arthur - CV</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #FFD700;
+            background: #000000;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            background: linear-gradient(180deg, rgba(20, 20, 50, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
+            color: #FFD700;
+            padding: 50px 60px 50px;
+            position: relative;
+            border-bottom: 3px solid #FFD700;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+        }
+        
+        .portfolio-nav {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            right: 40px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            z-index: 10;
+        }
+        
+        .portfolio-dropdown {
+            position: relative;
+        }
+        
+        .portfolio-btn {
+            background: rgba(255, 215, 0, 0.15);
+            color: #FFD700;
+            padding: 10px 20px;
+            border: 2px solid #FFD700;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .portfolio-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            /*margin-top: 10px;*/
+            padding-top: 10px;
+            background: rgba(0, 0, 20, 0.95);
+            border: 2px solid #FFD700;
+            border-radius: 5px;
+            min-width: 250px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            z-index: 100;
+        }
+        
+        .portfolio-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            color: #FFD700;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-content a:hover {
+            background: rgba(255, 215, 0, 0.2);
+            padding-left: 25px;
+            color: #FFA500;
+        }
+        
+        .dropdown-content a::before {
+            content: '► ';
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .dropdown-content a:hover::before {
+            opacity: 1;
+        }
+        
+        .header-main {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-top: 45px;
+        }
+        
+        .profile-photo {
+            width: 140px;
+            height: 170px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            flex-shrink: 0;
+            background: rgba(255, 215, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            text-align: center;
+            color: #FFD700;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+        
+        .tagline {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #FFA500;
+            letter-spacing: 1px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            font-size: 0.95em;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #FFD700;
+            font-weight: 700;
+        }
+        
+        .content {
+            padding: 50px 60px;
+            background: rgba(0, 0, 20, 0.5);
+        }
+        
+        .section {
+            margin-bottom: 45px;
+        }
+        
+        .section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.6em;
+            color: #FFD700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FFD700;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+        
+        .profile-text {
+            color: #FFF8DC;
+            line-height: 1.8;
+            font-size: 1em;
+            text-align: justify;
+        }
+
+        .profile-text strong {
+            color: #FFD700;
+            font-weight: 900 !important;
+        }
+
+        .profile-text em {
+            color: #FFA500;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        .experience-item {
+            margin-bottom: 30px;
+            padding-left: 20px;
+            border-left: 3px solid #FFD700;
+            position: relative;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #FFD700;
+            padding: 8px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .experience-content {
+            flex: 1;
+        }
+        
+        .experience-item::before {
+            content: '★';
+            position: absolute;
+            left: -12px;
+            top: 20px;
+            font-size: 20px;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+        
+        .experience-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .job-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .company {
+            color: #FFA500;
+            font-weight: 600;
+            margin-bottom: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        .company a {
+            color: #FFA500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .company a:hover {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+        
+        .date {
+            color: #DDD;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .description {
+            color: #FFF8DC;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        .description strong {
+            color: #FFD700;
+            font-weight: 900 !important;
+        }
+
+        .description em {
+            color: #FFA500;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        .description ul {
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+        
+        .description li {
+            margin-bottom: 5px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .skill-category h3 {
+            color: #FFD700;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .skill-tag {
+            background: rgba(255, 215, 0, 0.15);
+            color: #FFD700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background: rgba(255, 215, 0, 0.25);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+        
+        .skill-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 3px;
+            padding: 2px;
+        }
+        
+        .skill-icon[src=""],
+        .skill-icon:not([src]) {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+        }
+        
+        .education-item {
+            margin-bottom: 20px;
+        }
+        
+        .degree {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .degree a {
+            color: #FFA500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .degree a:hover {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+        
+        .institution {
+            color: #FFA500;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+        
+        @media print {
+            body {
+                background: black;
+                padding: 0;
+            }
+            
+            .stars {
+                display: none;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 30px 40px 25px;
+            }
+            
+            .content {
+                padding: 30px 40px;
+            }
+            
+            .section {
+                margin-bottom: 30px;
+            }
+            
+            .portfolio-nav {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header, .content {
+                padding: 30px 30px;
+            }
+            
+            .portfolio-nav {
+                position: static;
+                flex-direction: column;
+                margin-bottom: 20px;
+                width: 100%;
+                gap: 10px;
+            }
+            
+            .portfolio-dropdown {
+                width: 100%;
+            }
+            
+            .portfolio-btn {
+                width: 100%;
+            }
+            
+            .dropdown-content {
+                position: static;
+                display: none;
+                margin-top: 5px;
+                width: 100%;
+            }
+            
+            .portfolio-dropdown.active .dropdown-content {
+                display: block;
+            }
+            
+            .header-main {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-photo {
+                width: 120px;
+                height: 150px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    
+    <script>
+        const starfield = document.getElementById('starfield');
+        const numStars = 200;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            starfield.appendChild(star);
+        }
+        
+        // Mobile dropdown toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.portfolio-dropdown');
+            dropdowns.forEach(dropdown => {
+                const btn = dropdown.querySelector('.portfolio-btn');
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+        });
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <div class="portfolio-nav">
+                <div class="portfolio-dropdown">
+                    <a href="index.html" style="text-decoration: none;">
+                        <button class="portfolio-btn">
+                            ← Back to CV
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="portfolio-dropdown left-aligned-nav">
+                    <button class="portfolio-btn">More Projects</button>
+                    <div class="dropdown-content" style="padding-top: 10px;"> 
+                        <a href="project-a.html">Previous Project Name</a>
+                        <a href="project-c.html">Next Project Name</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-main">
+                <div class="header-content" style="text-align: center;">
+                    <h1>[PROJECT TITLE HERE]</h1>
+                    <div class="tagline">[Project Role / Focus: e.g., 3D Modelling & Motion Graphics]</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+    
+            <div class="section">
+                <h2 class="section-title">Project Overview / Concept</h2>
+                <p class="profile-text">
+                    This project was a deep dive into <strong>procedural generation</strong> using Blender's Geometry Nodes. The goal was to create an infinite, looping animation of a hyperspace jump, similar to classic Sci-Fi, but with a unique visual twist.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Visual Showcase</h2>
+                <div style="margin: 20px 0;">
+                    <iframe width="100%" height="450" src="[YOUR VIDEO EMBED LINK]" frameborder="0" allowfullscreen style="border: 2px solid #FFD700; border-radius: 5px;"></iframe>
+                </div>
+                <div style="text-align: center; color: #FFA500; font-style: italic;">
+                    *Final render, aspect ratio 16:9, rendered in Eevee.*
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Technical Breakdown / Stack</h2>
+                <div class="description">
+                    <p><strong>Key Tools Used:</strong></p>
+                    <ul>
+                        <li><strong>3D & Motion:</strong> Blender 4.1 (Geometry Nodes, Cycles/Eevee)</li>
+                        <li><strong>Compositing:</strong> Adobe After Effects for final color grading and film grain overlay.</li>
+                        <li><strong>Assets:</strong> Custom textures created in Adobe Illustrator.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Lessons Learned</h2>
+                <div class="description">
+                    <p>
+                        The biggest challenge was optimizing the Geometry Node tree for render speed while maintaining visual complexity. This led to a better understanding of **instancing efficiency** and **GPU utilization**.
+                    </p>
+                </div>
+            </div>
+        </div>           
+</body>
+</html>

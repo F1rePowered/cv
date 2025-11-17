@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ion Arthur - Portfolio Project</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">×</span>
+        <img id="lightbox-img" class="lightbox-image" src="" alt="Full size image">
+    </div>
+    
+    <script>
+        const starfield = document.getElementById('starfield');
+        const numStars = 200;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            starfield.appendChild(star);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown functionality
+            const dropdowns = document.querySelectorAll('.portfolio-dropdown');
+            dropdowns.forEach(dropdown => {
+                const btn = dropdown.querySelector('.portfolio-btn');
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+            
+            // Accordion functionality
+            document.querySelectorAll('.accordion-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('active');
+                    
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = '0px';
+                    } else {
+                        document.querySelectorAll('.collapsible-content').forEach(otherContent => {
+                            if (otherContent !== content && otherContent.style.maxHeight !== '0px') {
+                                otherContent.style.maxHeight = '0px';
+                                otherContent.previousElementSibling.classList.remove('active');
+                            }
+                        });
+                        content.style.maxHeight = content.scrollHeight + 40 + "px"; 
+                    } 
+                });
+            });
+            
+            // Image gallery functionality
+            const galleries = document.querySelectorAll('.gallery-container');
+            
+            galleries.forEach(gallery => {
+                const images = gallery.querySelectorAll('.gallery-image');
+                const prevBtn = gallery.querySelector('.gallery-prev');
+                const nextBtn = gallery.querySelector('.gallery-next');
+                const counter = gallery.querySelector('.gallery-counter');
+                let currentIndex = 0;
+                
+                function showImage(index) {
+                    images.forEach(img => img.classList.remove('active'));
+                    images[index].classList.add('active');
+                    counter.textContent = `Image ${index + 1} of ${images.length}`;
+                }
+                
+                prevBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                nextBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                // Initialize first image
+                if (images.length > 0) {
+                    showImage(0);
+                }
+                
+                // Add click event to images for lightbox
+                images.forEach(img => {
+                    img.addEventListener('click', function() {
+                        openLightbox(this.src);
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            function openLightbox(imageSrc) {
+                const lightbox = document.getElementById('lightbox');
+                const lightboxImg = document.getElementById('lightbox-img');
+                lightboxImg.src = imageSrc;
+                lightbox.classList.add('active');
+            }
+            
+            function closeLightbox() {
+                const lightbox = document.getElementById('lightbox');
+                lightbox.classList.remove('active');
+            }
+            
+            // Close lightbox on click
+            document.getElementById('lightbox').addEventListener('click', closeLightbox);
+            
+            // Close lightbox on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <div class="portfolio-nav">
+                <div class="portfolio-dropdown">
+                    <a href="index.html" style="text-decoration: none;">
+                        <button class="portfolio-btn">
+                            ← Back to CV
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="portfolio-dropdown left-aligned-nav">
+                    <button class="portfolio-btn">More Projects</button>
+                    <div class="dropdown-content" style="padding-top: 10px;"> 
+                        <a href="AV_project.html">AV Post-Production</a>
+                        <a href="graphics_project.html">Motion Graphics</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-main">
+                <div class="header-content" style="text-align: center;">
+                    <h1>Arduino-Powered Projects</h1>
+                    <div class="tagline">Arduino Engineer</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            
+        <div class="section">
+            <h2 class="section-title">Project Overview</h2>
+        <p class="profile-text">
+                The arduino projects focused on <em>engaging technical thinking, practical skills such as soldering and asset/hardware manipulation skills</em>: 
+                <li>so that in the end we would be able to properly create self-made solutions for various use-cases and other real-world applications.</li><br><br>
+                <em>Links embedded on this page:<a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer"> .ino code</a></em>
+            </p>
+
+<div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/arduino/midiboard/ard0.jpg" alt="Project 1 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">X</button>
+                                <button class="gallery-btn gallery-next">X</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 1</div>
+                        </div>
+    </div>
+            
+            <!-- Project 1 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Arduino-Powered Midi Board</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/arduino/midiboard/ard1.jpg" alt="Project 1 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+
+                                <img src="assets/images/arduino/midiboard/ard2.jpg" alt="Project 1 - Image 3" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/arduino/midiboard/ard3.jpg" alt="Project 1 - Image 4" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 3<br>Replace with your image path</div>
+
+                                <img src="assets/images/arduino/midiboard/ard4.jpg" alt="Project 1 - Image 4" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 4<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/arduino/midiboard/ard5.jpg" alt="Project 1 - Image 4" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 5<br>Replace with your image path</div>
+
+                                <img src="assets/images/arduino/midiboard/ard6.png" alt="Project 1 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 6<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>This project represents a <em>Trellis-board based Arduino-powered MIDI board.</em> It can be used to <em>bind keys, play
+                                rythm video games or simply depict a lit up pattern,</em> once connected to an USB-A capable device.
+                            </strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Components</h3>
+                        <div class="description">
+                            <ul>
+                                <strong>x4 M3 10mm screws<br>
+                                        x4 Trellis Boards<br>
+                                        x4 Silicon Button Pads<br>
+                                        Arduino Uno<br>     
+                                        x32 LEDs<br>
+                                        x1 I2C LED Screen<br>
+                                        x1 PIR Motion Sensor<br>
+                                        x1 3D Printed Case</strong> 
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>I started with comprehensive research into technical requirements and component specifications necessary.</p>
+                            
+                            <p>The MIDI board utilizes a <em>custom 3D-printed modular case</em> designed specifically for the button mesh dimensions, with precise internal clearances for the <em>Arduino</em> and <em>Trellis boards,</em> and integrated cable routing for the <em>I2C display.</em></p><br>
+                            
+                            <p>The device features a <em>PIR motion sensor</em> for <em>proximity-based security,</em> an interactive <em>I2C display</em> that responds to button inputs, and <em>32 individually manageable LEDs</em> positioned beneath each button.</p>
+                            <br>
+                            <p class="project-link">
+                                Its code can be accessed 
+                                <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer">here</a> 
+                                for those interested.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Arduino-Powered Backing-Track Ukulele</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/arduino/ukulele/uku0.png" alt="Project 2 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/arduino/ukulele/uku1.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/arduino/ukulele/uku2.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/arduino/ukulele/uku3.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>This ukulele offers the user the opportunity to <em>play alongside a backing track</em> without the need to <em>carry around external devices.</em></strong><br>
+                                It has an integrated <em>4 ohm speaker</em> that can play <em>backing tracks read off of an SD Card Reader</em> integrated inside of the Ukulele.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Components</h3>
+                        <div class="description">
+                            <ul>
+                                <strong>x1 DF Mini Player SD Reader<br>
+                                        x1 Amplifier + Potentiometer<br>
+                                        x1 4 Ohm speaker<br>
+                                        Arduino Nano
+                                </strong>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                                <p>I began this project by researching the details of <em>ukulele acoustics</em> and what materials and practices would be best to use in order to retain <em>proper sound accuracy.</em></p><br>
+                                
+                                <p>This project was made out of <em>lasercut wood,</em> after a <em>"Cigar-box" Ukulele structure.</em> <em>Wood-glue</em> was used to retain the acoustics, this unfortunately <em>denying the opportunity of a modular design.</em></p><br>
+                                
+                                <p>The speaker and potentiometer had <em>accurately cut entries</em> on the top frame so that they would properly fit. <em>Hot glue</em> was used to mount some of these components. <em>Electrical tape</em> was used on the cables in order to <em>reduce electrical interference.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+                                <button id="backToTopBtn" title="Go to top">
+                        <div class="button-starfield"></div>
+                        <span class="button-arrow">&uarr;</span>
+                        </button>
+<script>
+    let backToTopBtn = document.getElementById("backToTopBtn");
+
+    if (backToTopBtn) {
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollPosition > 100) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        }
+
+        backToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    const buttonStarfield = document.querySelector("#backToTopBtn .button-starfield");
+
+    if (buttonStarfield) {
+        const numButtonStars = 15;
+        
+        for (let i = 0; i < numButtonStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            
+            star.style.animationDelay = Math.random() * 2 + 's'; 
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            
+            const size = Math.random() * 1.5 + 0.5; 
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            buttonStarfield.appendChild(star);
+        }
+    }
+</script>              
+</body>
+</html>

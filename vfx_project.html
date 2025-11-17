@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ion Arthur - Portfolio Project</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">×</span>
+        <img id="lightbox-img" class="lightbox-image" src="" alt="Full size image">
+    </div>
+    
+    <script>
+        const starfield = document.getElementById('starfield');
+        const numStars = 200;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            starfield.appendChild(star);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown functionality
+            const dropdowns = document.querySelectorAll('.portfolio-dropdown');
+            dropdowns.forEach(dropdown => {
+                const btn = dropdown.querySelector('.portfolio-btn');
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+            
+            // Accordion functionality
+            document.querySelectorAll('.accordion-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('active');
+                    
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = '0px';
+                    } else {
+                        document.querySelectorAll('.collapsible-content').forEach(otherContent => {
+                            if (otherContent !== content && otherContent.style.maxHeight !== '0px') {
+                                otherContent.style.maxHeight = '0px';
+                                otherContent.previousElementSibling.classList.remove('active');
+                            }
+                        });
+                        content.style.maxHeight = content.scrollHeight + 40 + "px"; 
+                    } 
+                });
+            });
+            
+            // Image gallery functionality
+            const galleries = document.querySelectorAll('.gallery-container');
+            
+            galleries.forEach(gallery => {
+                const images = gallery.querySelectorAll('.gallery-image');
+                const prevBtn = gallery.querySelector('.gallery-prev');
+                const nextBtn = gallery.querySelector('.gallery-next');
+                const counter = gallery.querySelector('.gallery-counter');
+                let currentIndex = 0;
+                
+                function showImage(index) {
+                    images.forEach(img => img.classList.remove('active'));
+                    images[index].classList.add('active');
+                    counter.textContent = `Image ${index + 1} of ${images.length}`;
+                }
+                
+                prevBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                nextBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                // Initialize first image
+                if (images.length > 0) {
+                    showImage(0);
+                }
+                
+                // Add click event to images for lightbox
+                images.forEach(img => {
+                    img.addEventListener('click', function() {
+                        openLightbox(this.src);
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            function openLightbox(imageSrc) {
+                const lightbox = document.getElementById('lightbox');
+                const lightboxImg = document.getElementById('lightbox-img');
+                lightboxImg.src = imageSrc;
+                lightbox.classList.add('active');
+            }
+            
+            function closeLightbox() {
+                const lightbox = document.getElementById('lightbox');
+                lightbox.classList.remove('active');
+            }
+            
+            // Close lightbox on click
+            document.getElementById('lightbox').addEventListener('click', closeLightbox);
+            
+            // Close lightbox on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <div class="portfolio-nav">
+                <div class="portfolio-dropdown">
+                    <a href="index.html" style="text-decoration: none;">
+                        <button class="portfolio-btn">
+                            ← Back to CV
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="portfolio-dropdown left-aligned-nav">
+                    <button class="portfolio-btn">More Projects</button>
+                    <div class="dropdown-content" style="padding-top: 10px;"> 
+                        <a href="graphics_project.html">Motion Graphics</a>
+                        <a href="personal.html">Personal Portfolio</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-main">
+                <div class="header-content" style="text-align: center;">
+                    <h1>Visual Effects</h1>
+                    <div class="tagline">VFX Artist</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            
+        <div class="section">
+            <h2 class="section-title">Project Overview</h2>
+        <p class="profile-text">
+                This project's goal was <em>modifying a 3D rendered scene by integrating visual effects</em> using Adobe After Effects and Blender.
+                <li>The main objectives were to track objects within the scene, remove unwanted elements, and composite new assets with as little error as possible.</li>
+            </p>
+    
+            <div style="margin-top: 30px;">
+                <h3 class="sub-section-title" style="margin-bottom: 15px;">Final Result</h3>
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 2px solid #FFD700; border-radius: 5px;">
+                    <iframe 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                        src="https://www.youtube.com/embed/fL7gUz_H6mw"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div style="text-align: center; color: #FFA500; font-style: italic; margin-top: 10px;">
+                    *Final composite showcasing all VFX elements, rendered at 3840x2160*
+                </div>
+            </div>
+        </div>
+            
+            <!-- Project 1 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Picture Frame & Middle Cylinder Tracking</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/VFX/vfx0.png" alt="Project 1 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/VFX/vfx1.png" alt="Project 1 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/VFX/vfx2.png" alt="Project 1 - Image 3" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 3<br>Replace with your image path</div>
+
+                                <img src="assets/images/VFX/vfx3.png" alt="Project 1 - Image 4" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 4<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>Tracked picture frame and cylinder <em>using Mocha AE planar tracking</em> with reference points to <em>prevent drift.</em></strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>I used a <em>planar tracker</em> to <em>keyframe</em> both the positions of the image frame and middle cylinder inside of <em>Mocha After Effects.</em></p>
+                            
+                            <ul class="skills-list">
+                                <li>Reference points have been used at the image corners to prevent <em>tracking drift.</em></li>
+                                <li>Afterward, I created a <em>Picture Frame Track,</em> featuring a custom car poster, which is visible in the final product.</li>
+                                <li>Since the picture frame would further have glass in front of it, I used a <em>levels modifier</em> to give it more of a muted feel.</li>
+                                <li>The initial phase concluded with <em>rotoscoping</em> the middle cylinder to create a <em>luma matte</em> that would be <em>composited</em> over the picture frame.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Masking the Cylinder Track Marks</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/VFX/vfx4.png" alt="Project 2 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/VFX/vfx5.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong><em>Removed tracking markers from cylinder</em> using Photoshop's <em>content-aware fill</em> across multiple reference frames.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Photoshop, Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                        <p>I generated multiple reference frames using <em>content-aware fill</em> inside of <em>Photoshop,</em> which effectively helped generate a <em>fill layer</em> that <em>masked the tracking dots</em> from the cylinder.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Camera Solving in Blender</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/VFX/vfx6.jpg" alt="Project 3 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/VFX/vfx7.jpg" alt="Project 3 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/VFX/vfx8.jpg" alt="Project 3 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 3<br>Replace with your image path</div>
+
+                                <img src="assets/images/VFX/vfx9.jpg" alt="Project 3 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 4<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 2</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>Used Blender's motion tracking to <em>solve camera movement</em>, added 3D objects (torus rings, wheel), created HDRI reflections and shadow catchers.</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Blender</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>I began by entering Blender's <em>Motion Tracking workspace</em> where I prefetched the clip for better timeline responsiveness.</p>
+                            
+                            <ul class="skills-list">
+                                <li>Using <em>"Detect Features",</em> I found the trackable elements that stood out throughout the footage.</li>
+                                <li>After adjusting the correlation setting for more accurate tracking at the expense of processing power, I tracked markers both forward and backward through the timeline. I removed erratic tracks that could compromise the camera solve, then executed the <em>"Solve Camera Motion"</em> function.</li>
+                                <li>After carefully re-iterating my settings a couple of times, and selecting the tracks I knew would be easy for Blender's camera solver to track, I achieved a <em>solve error of 0.65 pixels.</em> I then set the X and Y axes based on an origin point I selected, after which I made sure the tracker points aligned with the locations of the geometry i needed to create.</li>
+                                <li>Finally, I incorporated <em>HDRIs</em> to create realistic reflective surfaces which I first used on a newly made Sphere, crafted a clean version of the cylinder's top interior lid (without tracking marks and with proper shadows), after which I animated two looping objects: reflective torus rings and a spinning wheel. I moved on by creating a <em>shadowcatcher mesh,</em> where I adjusted the material settings to only capture shadows of the extra added geometry without rendering the mesh itself (with the help of a sun object that I rotated and set the intensity of accordingly).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 4 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Importing the Blender changes to After Effects</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/VFX/vfx10.jpg" alt="Project 4 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/VFX/vfx11.jpg" alt="Project 4 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/VFX/vfx12.jpg" alt="Project 4 - Image 3" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 3<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 4</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong><em>Composited Blender renders in AE</em>, adjusted glass reflections and shadow colors, applied vector blur for softer edges, exported at 35 Mbps h264.</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>After rendering and importing everything I required from <em>Blender</em> (shadows, reflective surfaces and new objects), I proceeded with the <em>final compositing</em> touches inside of <em>After Effects.</em></p>
+                            
+                            <ul class="skills-list">
+                                <li>I applied a <em>Lumetri Color modifier</em> to the cylinder top in order to clean it up, then adjusted the glass reflection opacity to reveal the underlying image.</li>
+                                <li>Using a <em>fill modifier,</em> I <em>color-corrected</em> the shadowcatcher to better match scene lighting.</li>
+                                <li>(Note: The wheel object's shadow color couldn't be modified without <em>re-rendering</em> the shadow catcher, which time constraints prevented.)</li>
+                                <li>As a finishing touch I applied <em>vector blur</em> to soften harsh shadow edges. The final video was rendered out in <em>Adobe Media Encoder,</em> using an <em>H264 format</em> with a <em>constant bitrate of 35 Mbps.</em></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+             <button id="backToTopBtn" title="Go to top">
+                <div class="button-starfield"></div>
+                <span class="button-arrow">&uarr;</span>
+                 </button>
+<script>
+    let backToTopBtn = document.getElementById("backToTopBtn");
+
+    if (backToTopBtn) {
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollPosition > 100) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        }
+
+        backToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    const buttonStarfield = document.querySelector("#backToTopBtn .button-starfield");
+
+    if (buttonStarfield) {
+        const numButtonStars = 15;
+        
+        for (let i = 0; i < numButtonStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            
+            star.style.animationDelay = Math.random() * 2 + 's'; 
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            
+            const size = Math.random() * 1.5 + 0.5; 
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            buttonStarfield.appendChild(star);
+        }
+    }
+</script>           
+</body>
+</html>

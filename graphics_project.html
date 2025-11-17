@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ion Arthur - Portfolio Project</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">×</span>
+        <img id="lightbox-img" class="lightbox-image" src="" alt="Full size image">
+    </div>
+    
+    <script>
+        const starfield = document.getElementById('starfield');
+        const numStars = 200;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            starfield.appendChild(star);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown functionality
+            const dropdowns = document.querySelectorAll('.portfolio-dropdown');
+            dropdowns.forEach(dropdown => {
+                const btn = dropdown.querySelector('.portfolio-btn');
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+            
+            // Accordion functionality
+            document.querySelectorAll('.accordion-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('active');
+                    
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = '0px';
+                    } else {
+                        document.querySelectorAll('.collapsible-content').forEach(otherContent => {
+                            if (otherContent !== content && otherContent.style.maxHeight !== '0px') {
+                                otherContent.style.maxHeight = '0px';
+                                otherContent.previousElementSibling.classList.remove('active');
+                            }
+                        });
+                        content.style.maxHeight = content.scrollHeight + 40 + "px"; 
+                    } 
+                });
+            });
+            
+            // Image gallery functionality
+            const galleries = document.querySelectorAll('.gallery-container');
+            
+            galleries.forEach(gallery => {
+                const images = gallery.querySelectorAll('.gallery-image');
+                const prevBtn = gallery.querySelector('.gallery-prev');
+                const nextBtn = gallery.querySelector('.gallery-next');
+                const counter = gallery.querySelector('.gallery-counter');
+                let currentIndex = 0;
+                
+                function showImage(index) {
+                    images.forEach(img => img.classList.remove('active'));
+                    images[index].classList.add('active');
+                    counter.textContent = `Image ${index + 1} of ${images.length}`;
+                }
+                
+                prevBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                nextBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                // Initialize first image
+                if (images.length > 0) {
+                    showImage(0);
+                }
+                
+                // Add click event to images for lightbox
+                images.forEach(img => {
+                    img.addEventListener('click', function() {
+                        openLightbox(this.src);
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            function openLightbox(imageSrc) {
+                const lightbox = document.getElementById('lightbox');
+                const lightboxImg = document.getElementById('lightbox-img');
+                lightboxImg.src = imageSrc;
+                lightbox.classList.add('active');
+            }
+            
+            function closeLightbox() {
+                const lightbox = document.getElementById('lightbox');
+                lightbox.classList.remove('active');
+            }
+            
+            // Close lightbox on click
+            document.getElementById('lightbox').addEventListener('click', closeLightbox);
+            
+            // Close lightbox on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <div class="portfolio-nav">
+                <div class="portfolio-dropdown">
+                    <a href="index.html" style="text-decoration: none;">
+                        <button class="portfolio-btn">
+                            ← Back to CV
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="portfolio-dropdown left-aligned-nav">
+                    <button class="portfolio-btn">More Projects</button>
+                    <div class="dropdown-content" style="padding-top: 10px;"> 
+                        <a href="arduino_project.html">Arduino-Powered</a>
+                        <a href="vfx_project.html">Visual Effects</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-main">
+                <div class="header-content" style="text-align: center;">
+                    <h1>Motion Graphics</h1>
+                    <div class="tagline">Motion Graphics Designer</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            
+        <div class="section">
+            <h2 class="section-title">Project Overview</h2>
+        <p class="profile-text">
+                This project focused on mastering After Effects <em>animation techniques and compositing workflows.</em>
+                <li>The main objectives were to develop proficiency in keyframe animation, motion graphics, and layer composition through a series of creative exercises.</li>
+            </p>
+    
+            <div style="margin-top: 30px;">
+                <h3 class="sub-section-title" style="margin-bottom: 15px;">Final Result</h3>
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 2px solid #FFD700; border-radius: 5px;">
+                    <iframe 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                        src="https://www.youtube.com/embed/SEKeXfkrCS4?si=r-1Y8NehjUgGhuCz"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div style="text-align: center; color: #FFA500; font-style: italic; margin-top: 10px;">
+                    *Final portfolio showcasing all Project elements, rendered at 1920x1080*
+                </div>
+            </div>
+        </div>
+            
+            <!-- Project 1 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">DOOH (Digital Out-Of-Home)</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/motion graphics/DOOH/dooh1 .png" alt="Project 1 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>Created <em>dynamic promotional content</em> incorporating animation and effects where <em>visual hierarchy is important</em> to draw focus on key elements.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>I <em>keyframed scaling, rotation, position and opacity</em> across multiple elements, and <em>enhanced hierarchy</em> using <em>drop shadows</em> and price elements.</p>
+                            
+                            <ul class="skills-list">
+                                <li>A <em>directional light sweep</em> was used on the brand logo.</li>
+                                <li>A <em>"Mover" object</em> was created in the hierarchy to efficiently <em>control multiple child objects</em> within the composition simultaneously.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Logomotion A & B</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/motion graphics/logomotion/log 0.png" alt="Project 2 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/motion graphics/logomotion/log1.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/motion graphics/logomotion/log2.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>For this project, I created two <em>unique logo reveal animations</em> with the use of: track mattes, mask animations, and trim paths with the objective of achieving smooth revealing effects.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>Logomotion A was made by individually animating logo components via <em>keyframing mask paths, scale, opacity & position</em> for separate mask sections.</p>
+                            
+                            <p>For Logomotion B, I used a <em>vector extension logo</em> as a <em>track matte</em> for a <em>shape layer</em> with <em>trim paths.</em> The masked elements were keyframed to achieve a <em>progressive reveal.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Finding Balance</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/motion graphics/Finding Balance/fb0.png" alt="Project 3 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/motion graphics/Finding Balance/fb1.png" alt="Project 3 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/motion graphics/Finding Balance/fb2.png" alt="Project 3 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 3<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 2</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>Finding balance is an abstract animation where <em>custom textures and cohesive design</em> were essential.</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>Each <em>vector extension shape file</em> had <em>individual compositons</em> created where custom textures were modified through <em>After Effects</em> (using effects such as <em>inner glow</em> and <em>color adjustments</em>).</p>
+                            
+                            <p>Elements were <em>parented</em> to a <em>"Mover" object</em> where <em>position, rotation and scale keyframes</em> were used to achieve <em>balanced movement.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 4 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Speak Out!</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/motion graphics/Speak Out/speak1.png" alt="Project 4 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/motion graphics/Speak Out/speak2.png" alt="Project 4 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/motion graphics/Speak Out/speak3.png" alt="Project 4 - Image 3" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 3<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 4</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>The Speak Out! project is designed typography using <em>text animators and curved mask paths</em> in order to create <em>dynamically revealed text compositions.</em></strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p><em>Text animators</em> were utilized in order to <em>keyframe directional reveals</em> with different animation styles.</p>
+                            
+                            <p><em>Mask paths</em> were applied in order to <em>curve text,</em> while <em>visual effects</em> were meant to engage the viewer and enable <em>better readability</em> throughout the composition.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Mix & Match</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/motion graphics/Mix & Match/mix0.png" alt="Project 5 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/motion graphics/Mix & Match/mix1.png" alt="Project 5 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 2</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>Mix & Match is a typographic music video with <em>seamlessly looped shape-based animations</em> synchronized to musical tempo.</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Software: </strong> Adobe After Effects</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>I built animations from <em>shape layers,</em> each based on a weekly creative theme we were given in class.</p>
+                            
+                            <p>The loops are <em>carefully synchronised</em> to the <em>background music's BPM.</em></p>
+                            
+                            <p><em>Text animators</em> once again create the <em>dynamic environment</em> that enables <em>visual rhythm</em> and maintains engagement throughout the video's duration.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+                                <button id="backToTopBtn" title="Go to top">
+                        <div class="button-starfield"></div>
+                        <span class="button-arrow">&uarr;</span>
+                        </button>
+<script>
+    let backToTopBtn = document.getElementById("backToTopBtn");
+
+    if (backToTopBtn) {
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollPosition > 100) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        }
+
+        backToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    const buttonStarfield = document.querySelector("#backToTopBtn .button-starfield");
+
+    if (buttonStarfield) {
+        const numButtonStars = 15;
+        
+        for (let i = 0; i < numButtonStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            
+            star.style.animationDelay = Math.random() * 2 + 's'; 
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            
+            const size = Math.random() * 1.5 + 0.5; 
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            buttonStarfield.appendChild(star);
+        }
+    }
+</script>              
+</body>
+</html>

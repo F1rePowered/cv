@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ion Arthur - Audio-Video Postproduction</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    
+    <script>
+        const starfield = document.getElementById('starfield');
+        const numStars = 200;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            starfield.appendChild(star);
+        }
+        
+        // Mobile dropdown toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.portfolio-dropdown');
+            dropdowns.forEach(dropdown => {
+                const btn = dropdown.querySelector('.portfolio-btn');
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+            
+            // --- ACCORDION JAVASCRIPT ---
+            document.querySelectorAll('.accordion-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('active');
+                    
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        // Collapse the section
+                        content.style.maxHeight = '0px';
+                    } else {
+                        // Close all other open sections
+                         document.querySelectorAll('.collapsible-content').forEach(otherContent => {
+                            if (otherContent !== content && otherContent.style.maxHeight !== '0px') {
+                                otherContent.style.maxHeight = '0px';
+                                otherContent.previousElementSibling.classList.remove('active');
+                            }
+                        });
+
+                        // Expand the current section (set to scrollHeight + buffer)
+                        content.style.maxHeight = content.scrollHeight + 40 + "px"; 
+                    } 
+                });
+            });
+            // --- END ACCORDION JAVASCRIPT ---
+
+        });
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <div class="portfolio-nav">
+                <div class="portfolio-dropdown">
+                    <a href="index.html" style="text-decoration: none;">
+                        <button class="portfolio-btn">
+                            ← Back to CV
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="portfolio-dropdown left-aligned-nav">
+                    <button class="portfolio-btn">More Projects</button>
+                    <div class="dropdown-content" style="padding-top: 10px;"> 
+                        <a href="personal.html">Personal Portfolio</a>
+                        <a href="arduino_project.html">Arduino-Powered</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-main">
+                <div class="header-content" style="text-align: center;">
+                    <h1>Audio-Video Postproduction</h1>
+                    <div class="tagline">Post-Production Specialist</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            
+            <div class="section">
+                <h2 class="section-title">Project Overview / Concept</h2>
+                <p class="profile-text">
+                    This project contains <em>three videos</em> which are comprised of <em>professional raw footage</em> provided by my university teachers.</p>
+                    <p class="profile-text"><li>Our objective was to pick the footage that best fit our videos and create professional & comprehensive storylines where we showcase our post-production skills.</li>
+                </p>
+            </div>
+            
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Instructional video - Pour over Coffee</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        <div style="margin: 20px 0;">
+                            <iframe width="100%" height="450" 
+                                src="https://www.youtube.com/embed/Kc3ZizNGIBE" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen 
+                                style="border: 2px solid #FFD700; border-radius: 5px;">
+                            </iframe>
+                        </div>
+                        <div style="text-align: center; color: #FFA500; font-style: italic;">
+                            *Final render, 1080p 25fps, aspect ratio 16:9.*
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Objective</h3>
+                        <div class="description">
+                            <p><strong>"Create a <em>motivational, instructional video</em> on how to make a tasty pour over coffee."</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Post-Production: </strong> Davinci Resolve</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Lessons Learned</h3>
+                        <div class="description">
+                                <p>Being the first part of my project. I chose to work with <em>Davinci Resolve.</em> I chose to do so in order to <em>broaden my skill set</em> and knowledge in post-production software. I have learned how to effectively <em>color grade, vignette, audio mix</em> and manage the timeline using Davinci's UI.</p>
+                                
+                                <p>One important lesson I have learned is to keep on-screen text within the <em>title-safe areas,</em> as it may get cut off on different screens or playback platforms, as well as to be more careful with <em>text colors and contrast.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Promotional Video - Jef Neve Scores</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        <div style="margin: 20px 0;">
+                            <iframe width="100%" height="450" 
+                            src="https://www.youtube.com/embed/FA8_P2mvqdQ" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen 
+                            style="border: 2px solid #FFD700; border-radius: 5px;">
+                            </iframe>
+                        </div>
+                        <div style="text-align: center; color: #FFA500; font-style: italic;">
+                            *Final render, 1080p at 25fps, aspect ratio 16:9.*
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Objective</h3>
+                        <div class="description">
+                            <p><strong>"Create a promotional video for 3 piano books 'Start 2 Play', composed by Belgian pianist and composer Jef Neve. <em>The result should be recruiting.</em>"</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Post-Production: </strong> Final Cut Pro</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Lessons Learned</h3>
+                        <div class="description">
+                            <p>I continued expanding my horizons by switching to <em>Final Cut Pro</em> for my second project. My aim was to create <em>dynamic and rhythmic musical cutting</em> between the <em>multicamera shots,</em> the audio and the voiceover.</p>
+  
+                            <p>I <em>synchronized the camera angles</em> of the composition in a <em>multicamera source sequence,</em> <em>audio mixed</em> the voiceover and background music, <em>color graded</em> and matched graphics with the voiceover.</p>
+                            
+                            <p>This project has taught me to <em>better manage multicamera sequences</em> and pay close attention to the <em>relevancy and timing of cuts</em> in relation to the music and voiceover.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Fictional video - A man in a hat</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        <div style="margin: 20px 0;">
+                            <iframe width="100%" height="450" 
+                            src="https://www.youtube.com/embed/pIBX4lEYV7w" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen 
+                            style="border: 2px solid #FFD700; border-radius: 5px;">
+                            </iframe>
+                        </div>
+                        <div style="text-align: center; color: #FFA500; font-style: italic;">
+                            *Final render, 1080p at 25fps, aspect ratio 16:9.*
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Objective</h3>
+                        <div class="description">
+                            <p><strong>"Create a narrative that <em>fits the mood and atmosphere of the footage.</em> Choose music and sound design that <em>enhance your story and the noir feel.</em>
+                                Think about tension, pacing, and mood. <em>Play with rhythm, intensity, and contrast.</em>
+                                You may use colour, black & white, or a mix — whatever serves your interpretation best."</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Technical Breakdown / Stack</h3>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Post-Production: </strong> Adobe Premiere Pro</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Lessons Learned</h3>
+                        <div class="description">
+                            <p>For my final video, I decided to return to <em>Adobe Premiere Pro,</em> as I was already familiar with this software. My aim for this project was to create a <em>mysterious noir film scene</em> that effectively conveyed <em>tension and atmosphere</em> through careful <em>score-to-shot pacing</em> and <em>color grading.</em></p>
+                            
+                            <p>I picked my score carefully, as well as chose to use a <em>LUT mask:</em> the "Fuji REALA 500D Kodak 2393". This LUT properly conveys the <em>ambience</em> I wanted to achieve for my scene color-wise as well as adds the necessary <em>film grain</em> to create a noir aesthetic.</p>
+                            
+                            <p>This project has taught me the <em>importance of pacing and ambience</em> in storytelling through video. I've felt firsthand how much of a difference the right music and color grading can make in setting the <em>tone and mood</em> of a scene.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+                                <button id="backToTopBtn" title="Go to top">
+                        <div class="button-starfield"></div>
+                        <span class="button-arrow">&uarr;</span>
+                        </button>
+<script>
+    let backToTopBtn = document.getElementById("backToTopBtn");
+
+    if (backToTopBtn) {
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollPosition > 100) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        }
+
+        backToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    const buttonStarfield = document.querySelector("#backToTopBtn .button-starfield");
+
+    if (buttonStarfield) {
+        const numButtonStars = 15;
+        
+        for (let i = 0; i < numButtonStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            
+            star.style.animationDelay = Math.random() * 2 + 's'; 
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            
+            const size = Math.random() * 1.5 + 0.5; 
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            buttonStarfield.appendChild(star);
+        }
+    }
+</script>              
+</body>
+</html>
