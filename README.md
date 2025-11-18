@@ -2,6 +2,8 @@
 
 This project serves as my digital CV and portfolio, highlighting my technical skills, projects, and experience as I search for an internship placement.<br> 
 
+The webcv can be accessed through [here](https://f1repowered.github.io/cv/index.html) over github pages.
+
 Made by Arthur | MCT Student @ KdG
 
 
