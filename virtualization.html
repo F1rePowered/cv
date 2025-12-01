@@ -179,8 +179,8 @@
                 The virtualization project focuses on <em>engaging computational thinking & system-level skills</em>: 
                 <li>that effectively result in a self-made solution to nest other operating systems within the host OS.</li>
                 <li>This is a self-taught journey on finding a feasible, reliable solution that surpasses dual-booting.</li><br><br>
-                <em>Links embedded on this page:<a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer"> XML code</a>;
-                <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer"> IOMMU Groups Bash Script</a>.</em>
+                <em>Links embedded on this page:<a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/vfio-vm.xml" target="_blank" rel="noopener noreferrer"> XML code</a>;
+                <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/iommu_script.sh" target="_blank" rel="noopener noreferrer"> IOMMU Groups Bash Script</a>.</em>
             </p>
 
 <div class="gallery-container">
@@ -256,7 +256,7 @@
                             and uncomment it inside of <strong>"/etc/libvirt/qemu.conf"</strong>. (While this does lower security, unless anything sketchy is being done with the VM there are no realistic risks involved).
                         </p>
                         <p>I moved to enable <em>XML editing</em> inside of Virt-Manager's Preferences, while adding the <strong>QEMU/KVM Hypervisor</strong> connection from the File top menu.
-                        I checked my <em>IOMMU groups</em> with the <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer">following</a> bash script.
+                        I checked my <em>IOMMU groups</em> with the <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/iommu_script.sh" target="_blank" rel="noopener noreferrer">following</a> bash script.
                         </p><br>
                         <p>After making sure my <em>dGPU</em> and its soundcard belong to the same group, I moved on to add my user to the <strong>libvirt</strong>, <strong>kvm</strong> & <strong>input</strong> groups.</p>
                         <br>
@@ -322,7 +322,7 @@
 
                         <p>Following, we'll be doing some <strong>CPU Pinning</strong>, this being the single most important optimization you can make by helping <em>hyperthreading</em> inside of the virtual machine.<br>
                         Using <strong>"lscpu -e"</strong> you will get a similar output to one of the pictures available above. This shows the physical CPUs available from your current hardware.<br>
-                        With this information, you can check the provided <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer">XML</a> to analyse the pinning syntax and assign CPUs to be isolated inside of the Virtual Machine.<br>
+                        With this information, you can check the provided <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/vfio-vm.xml" target="_blank" rel="noopener noreferrer">XML</a> to analyse the pinning syntax and assign CPUs to be isolated inside of the Virtual Machine.<br>
                         <em>Iothreads</em> and <em>emulatorpins</em> are used inside of the XML as well, assigned to the first (0) and last cores (13) in an attempt to use the lowest load cores available for this task. They help with handling QEMU and IO performance better on <em>qcow storage</em>.
                         </p><br>
 
@@ -334,7 +334,7 @@
                         Onto the last step, <strong>Audio Passthrough</strong>.<br>
                         Audio passthrough will be run through your user, therefore requiring you to set the variables for <strong>"#user"</strong> & <strong>"#group"</strong> to <strong>"userid"</strong> (found through <strong>"id -u"</strong>) & <strong>"kvm"</strong>, <em>respectively</em>, inside of <strong>/etc/libvirt/qemu.conf</strong>.<br>
                         Our passthrough is reliant on the <em>pulseaudio</em>, <em>pipewire</em> or <em>jack</em> backends. I found pulseaudio to be the best fit for my setup, therefore using the following audio tag: <strong>audio id="1" type="pulseaudio"</strong>.<br><br>
-                        The necessary QEMU arguments are to be found at the bottom of my <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer">XML</a>.<br><br>
+                        The necessary QEMU arguments are to be found at the bottom of my <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/vfio-vm.xml" target="_blank" rel="noopener noreferrer">XML</a>.<br><br>
                         While there could be more improvements to be made here, such as <em>Memory Hugepages</em>, or using <em>Looking Glass</em>, they go into too much detail as their return on investment outlives the scope of this description.<br><br>
 
                         Thank you for reaching the end of this description, your patience is highly valued.
