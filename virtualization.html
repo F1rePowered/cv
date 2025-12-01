@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ion Arthur - Virtualization</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">×</span>
+        <img id="lightbox-img" class="lightbox-image" src="" alt="Full size image">
+    </div>
+    
+    <script>
+        const starfield = document.getElementById('starfield');
+        const numStars = 200;
+        
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            starfield.appendChild(star);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown functionality
+            const dropdowns = document.querySelectorAll('.portfolio-dropdown');
+            dropdowns.forEach(dropdown => {
+                const btn = dropdown.querySelector('.portfolio-btn');
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.addEventListener('click', function() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+            
+            // Accordion functionality
+            document.querySelectorAll('.accordion-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('active');
+                    
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = '0px';
+                    } else {
+                        document.querySelectorAll('.collapsible-content').forEach(otherContent => {
+                            if (otherContent !== content && otherContent.style.maxHeight !== '0px') {
+                                otherContent.style.maxHeight = '0px';
+                                otherContent.previousElementSibling.classList.remove('active');
+                            }
+                        });
+                        content.style.maxHeight = content.scrollHeight + 40 + "px"; 
+                    } 
+                });
+            });
+            
+            // Image gallery functionality
+            const galleries = document.querySelectorAll('.gallery-container');
+            
+            galleries.forEach(gallery => {
+                const images = gallery.querySelectorAll('.gallery-image');
+                const prevBtn = gallery.querySelector('.gallery-prev');
+                const nextBtn = gallery.querySelector('.gallery-next');
+                const counter = gallery.querySelector('.gallery-counter');
+                let currentIndex = 0;
+                
+                function showImage(index) {
+                    images.forEach(img => img.classList.remove('active'));
+                    images[index].classList.add('active');
+                    counter.textContent = `Image ${index + 1} of ${images.length}`;
+                }
+                
+                prevBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                nextBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    showImage(currentIndex);
+                });
+                
+                // Initialize first image
+                if (images.length > 0) {
+                    showImage(0);
+                }
+                
+                // Add click event to images for lightbox
+                images.forEach(img => {
+                    img.addEventListener('click', function() {
+                        openLightbox(this.src);
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            function openLightbox(imageSrc) {
+                const lightbox = document.getElementById('lightbox');
+                const lightboxImg = document.getElementById('lightbox-img');
+                lightboxImg.src = imageSrc;
+                lightbox.classList.add('active');
+            }
+            
+            function closeLightbox() {
+                const lightbox = document.getElementById('lightbox');
+                lightbox.classList.remove('active');
+            }
+            
+            // Close lightbox on click
+            document.getElementById('lightbox').addEventListener('click', closeLightbox);
+            
+            // Close lightbox on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+    
+    <div class="container">
+        <div class="header">
+            <div class="portfolio-nav">
+                <div class="portfolio-dropdown">
+                    <a href="index.html" style="text-decoration: none;">
+                        <button class="portfolio-btn">
+                            ← Back to CV
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="portfolio-dropdown left-aligned-nav">
+                    <button class="portfolio-btn">More Projects</button>
+                    <div class="dropdown-content" style="padding-top: 10px;">
+                        <a href="vfx_project.html">Visual Effects</a>
+                        <a href="AV_project.html">AV Post-Production</a>
+                        <a href="arduino_project.html">Arduino-Powered</a>
+                        <a href="graphics_project.html">Motion Graphics</a>
+                        <a href="personal.html">Personal Portfolio</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-main">
+                <div class="header-content" style="text-align: center;">
+                    <h1>Virtualization</h1>
+                    <div class="tagline"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            
+        <div class="section">
+            <h2 class="section-title">Project Overview</h2>
+        <p class="profile-text">
+                The virtualization project focuses on <em>engaging computational thinking & system-level skills</em>: 
+                <li>that effectively result in a self-made solution to nest other operating systems within the host OS.</li>
+                <li>This is a self-taught journey on finding a feasible, reliable solution that surpasses dual-booting.</li><br><br>
+                <em>Links embedded on this page:<a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer"> XML code</a>;
+                <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer"> IOMMU Groups Bash Script</a>.</em>
+            </p>
+
+<div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/virt/virt0.png" alt="Project 1 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">X</button>
+                                <button class="gallery-btn gallery-next">X</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 1</div>
+                        </div>
+    </div>
+            
+            <!-- Project 1 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Introduction</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/virt/virt1.png" alt="Project 1 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                <img src="assets/images/virt/virt5.png" alt="Project 1 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                                <img src="assets/images/virt/virt7.png" alt="Project 1 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>The introduction serves to explain the beginning steps of creating a <em>VFIO virtual machine</em>.
+                            This step will go through how the virtual machine was created and what steps were taken to create a functional <em>nested system</em>.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Requirements</h3>
+                        <div class="description">
+                            <ul>
+                                <strong>virtual machine manager (virt-manager)<br>
+                                        libvirt<br>
+                                        qemu-full (arch-based package)<br>
+                                        properly arranged IOMMU Groups (iommu=pt kernel argument)<br>
+                                        Hybrid Integrated + Dedicated GPU setup<br>
+                                        AMD GOP Driver (sometimes needed to boot with GPU passthrough, added as a rom bar to the PCI Device)<br>
+                                    </strong> 
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                            <p>I first installed the necessary packages and made sure I matched the above specified requirements.
+                            Note, if you are on a <em>Fedora-based system using SELinux</em>, you will want to find this line: <strong>"#security_default_confined = 1"</strong>
+                            and uncomment it inside of <strong>"/etc/libvirt/qemu.conf"</strong>. (While this does lower security, unless anything sketchy is being done with the VM there are no realistic risks involved).
+                        </p>
+                        <p>I moved to enable <em>XML editing</em> inside of Virt-Manager's Preferences, while adding the <strong>QEMU/KVM Hypervisor</strong> connection from the File top menu.
+                        I checked my <em>IOMMU groups</em> with the <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer">following</a> bash script.
+                        </p><br>
+                        <p>After making sure my <em>dGPU</em> and its soundcard belong to the same group, I moved on to add my user to the <strong>libvirt</strong>, <strong>kvm</strong> & <strong>input</strong> groups.</p>
+                        <br>
+                        <p class="project-link">
+                        I properly set up the Virtual Machine through <em>virt-manager's GUI</em>. I added the dGPU as a <strong>Physical PCI Device</strong> (courtesy to the IOMMU Groups script used previously), removed redundant devices, and used the improved <strong>VirtIO drivers</strong> where available. I also added the proper ISO media in order to install Windows as well as the <em>VirtIO guest drivers</em>.<br>
+                        I made sure to autostart my Virtual network passthrough (using <em>NAT</em>): <strong>"virsh net-autostart network-name"</strong>.
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="section project-group">
+                <h2 class="section-title accordion-title">Input, Performance, GPU & Audio Passthrough</h2>
+                
+                <div class="collapsible-content">
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Visual Showcase</h3>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-images">
+                                <img src="assets/images/virt/virt6.png" alt="Project 2 - Image 1" class="gallery-image active" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 1<br>Replace with your image path</div>
+                                
+                                <img src="assets/images/virt/virt2.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/virt/virt3.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+
+                                <img src="assets/images/virt/virt4.png" alt="Project 2 - Image 2" class="gallery-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="placeholder-image" style="display: none;">Image 2<br>Replace with your image path</div>
+                            </div>
+                            
+                            <div class="gallery-nav">
+                                <button class="gallery-btn gallery-prev">‹</button>
+                                <button class="gallery-btn gallery-next">›</button>
+                            </div>
+                            
+                            <div class="gallery-counter">Image 1 of 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Short Summary</h3>
+                        <div class="description">
+                            <p><strong>This step goes over how to manage <em>Hardware Acceleration</em>, <em>Performance</em>, <em>Input</em> & <em>Audio</em> reliably inside of our <strong>QEMU/KVM</strong> virtual machine.</strong>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-section">
+                        <h3 class="sub-section-title">Methodology</h3>
+                        <div class="description">
+                        <p>Now that we're through with the basics of installing our operating system, the next step is to get our graphics card to be functional.<br>
+                        An essential step for my scenario was to disable Windows's automatic driver downloads from inside of <strong>gpedit</strong> (Group Policy Editor).<br><br>
+                        While this should stop Windows from downloading any kind of drivers automatically, unfortunately it doesn't always seem to listen.<br>
+                        I personally had to use <strong>DDU</strong> (Display Driver Uninstaller) as it still proceeded to unsuccessfully install the graphics driver for my videocard automatically.<br>
+                        In this case, I disabled the <em>Virtual Network device</em> inside of the XML temporarily, and used an offline graphics driver installer specific to my videocard.<br><br>
+                        <strong>Note:</strong> Some <em>Nvidia Mobile Videocards</em> might post <strong>Error Code 43</strong>, requiring you to further hide the fact that you are inside of a virtual machine by creating a <em>fake battery</em> within QEMU, requiring specific vendor information relevant to your device, but I will not be going over that here.
+                        </p><br>
+
+                        <p>Following, we'll be doing some <strong>CPU Pinning</strong>, this being the single most important optimization you can make by helping <em>hyperthreading</em> inside of the virtual machine.<br>
+                        Using <strong>"lscpu -e"</strong> you will get a similar output to one of the pictures available above. This shows the physical CPUs available from your current hardware.<br>
+                        With this information, you can check the provided <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer">XML</a> to analyse the pinning syntax and assign CPUs to be isolated inside of the Virtual Machine.<br>
+                        <em>Iothreads</em> and <em>emulatorpins</em> are used inside of the XML as well, assigned to the first (0) and last cores (13) in an attempt to use the lowest load cores available for this task. They help with handling QEMU and IO performance better on <em>qcow storage</em>.
+                        </p><br>
+
+                        <p>Moving on to <strong>Input Management</strong>, this is done through <strong>Evdev</strong>. This means you'll want your input device IDs which can be found as follows: <strong>"ls /dev/input/by-id/"</strong>.<br>
+                        You can test the ID out to see if it matches your device by using this command: <strong>"cat /dev/input/by-id/DEVICE_NAME"</strong>, you should get terminal output on device input (mouse movement, keyboard typing).<br>
+                        To add an input device to the XML, you will need the following tags: <strong>"input type="evdev" "source dev="/dev/input/by-id/DEVICE_NAME"/"</strong>.<br>
+                        Make sure your user is added to the according groups (<strong>libvirt</strong>, <strong>input</strong>, <strong>kvm</strong>).<br><strong>Tip:</strong> Pressing <strong>CTRL+CTRL</strong> while using my XML layout allows switching between <em>Host & Guest Inputs</em>.<br><br>
+
+                        Onto the last step, <strong>Audio Passthrough</strong>.<br>
+                        Audio passthrough will be run through your user, therefore requiring you to set the variables for <strong>"#user"</strong> & <strong>"#group"</strong> to <strong>"userid"</strong> (found through <strong>"id -u"</strong>) & <strong>"kvm"</strong>, <em>respectively</em>, inside of <strong>/etc/libvirt/qemu.conf</strong>.<br>
+                        Our passthrough is reliant on the <em>pulseaudio</em>, <em>pipewire</em> or <em>jack</em> backends. I found pulseaudio to be the best fit for my setup, therefore using the following audio tag: <strong>audio id="1" type="pulseaudio"</strong>.<br><br>
+                        The necessary QEMU arguments are to be found at the bottom of my <a href="https://github.com/F1rePowered/cv/blob/main/assets/code-showcase/final_code.ino" target="_blank" rel="noopener noreferrer">XML</a>.<br><br>
+                        While there could be more improvements to be made here, such as <em>Memory Hugepages</em>, or using <em>Looking Glass</em>, they go into too much detail as their return on investment outlives the scope of this description.<br><br>
+
+                        Thank you for reaching the end of this description, your patience is highly valued.
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+                                <button id="backToTopBtn" title="Go to top">
+                        <div class="button-starfield"></div>
+                        <span class="button-arrow">&uarr;</span>
+                        </button>
+<script>
+    let backToTopBtn = document.getElementById("backToTopBtn");
+
+    if (backToTopBtn) {
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollPosition > 100) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        }
+
+        backToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    const buttonStarfield = document.querySelector("#backToTopBtn .button-starfield");
+
+    if (buttonStarfield) {
+        const numButtonStars = 15;
+        
+        for (let i = 0; i < numButtonStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            
+            star.style.animationDelay = Math.random() * 2 + 's'; 
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            
+            const size = Math.random() * 1.5 + 0.5; 
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            
+            buttonStarfield.appendChild(star);
+        }
+    }
+</script>              
+</body>
+</html>
