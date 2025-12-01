@@ -1,6 +1,6 @@
 <domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
   <name>win11</name>
-  <uuid>78fc419a-1d96-40fe-876a-36aa370dca4a</uuid>
+  <uuid>uuid-placeholder</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/10"/>
@@ -104,21 +104,21 @@
     </disk>
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
-      <source file="/home/arthu/Downloads/w11/window1124h2enterprise.iso"/>
+      <source file="/home/user/path/windows.iso"/>
       <target dev="sdb" bus="sata"/>
       <readonly/>
       <address type="drive" controller="0" bus="0" target="0" unit="1"/>
     </disk>
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
-      <source file="/home/arthu/Downloads/virtio-win-0.1.285.iso"/>
+      <source file="/home/user/path/virtio-win-0.1.285.iso"/>
       <target dev="sdc" bus="sata"/>
       <readonly/>
       <address type="drive" controller="0" bus="0" target="0" unit="2"/>
     </disk>
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
-      <source file="/home/arthu/Downloads/unattend.iso"/>
+      <source file="/home/user/path/unattend.iso"/>
       <target dev="sdd" bus="sata"/>
       <readonly/>
       <address type="drive" controller="0" bus="0" target="0" unit="3"/>
@@ -211,10 +211,10 @@
       <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
     </interface>
     <input type="evdev">
-      <source dev="/dev/input/by-id/usb-SONiX_Akko_Keyboard-event-kbd" grab="all" grabToggle="ctrl-ctrl" repeat="on"/>
+      <source dev="/dev/input/by-id/keyboard-placeholder" grab="all" grabToggle="ctrl-ctrl" repeat="on"/>
     </input>
     <input type="evdev">
-      <source dev="/dev/input/by-id/usb-Logitech_G502_HERO_Gaming_Mouse_037E32563638-event-mouse"/>
+      <source dev="/dev/input/by-id/mouse-placeholder"/>
     </input>
     <input type="keyboard" bus="virtio">
       <address type="pci" domain="0x0000" bus="0x06" slot="0x00" function="0x0"/>
@@ -249,7 +249,7 @@
       <source>
         <address domain="0x0000" bus="0x03" slot="0x00" function="0x1"/>
       </source>
-      <rom bar="on" file="/home/arthu/Downloads/AMDGopDriver_6800H.rom"/>
+      <rom bar="on" file="/home/user/path/AMDGopDriver_6800H.rom"/>
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x1"/>
     </hostdev>
     <hostdev mode="subsystem" type="usb" managed="yes">
